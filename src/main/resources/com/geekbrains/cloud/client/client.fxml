@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="632.0"
-      prefWidth="398.0" xmlns="http://javafx.com/javafx/8"
-      fx:controller="com.geekbrains.cloud.client.ClientController"
-      xmlns:fx="http://javafx.com/fxml/1">
-    <ListView fx:id="listView" prefHeight="733.0" prefWidth="398.0"/>
-    <TextField fx:id="textField" editable="false" onAction="#sendMessage" prefHeight="200.0" prefWidth="200.0"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="533.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
+    <children>
+        <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
+        <ListView fx:id="serverView" layoutX="269.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
+        <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
+        <Label fx:id="severLabel" layoutX="269.0" layoutY="590.0" text="Label" />
+        <Button layoutX="269.0" layoutY="69.0" mnemonicParsing="false" onAction="#download" text="Скачать" />
+        <Button layoutX="10.0" layoutY="69.0" mnemonicParsing="false" onAction="#upload" text="Загрузить" />
+    </children>
+</AnchorPane>

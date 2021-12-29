@@ -1,27 +1,28 @@
 package com.geekbrains.cloud.client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
 
+import com.geekbrains.cloud.utils.SenderUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 
 public class ClientController implements Initializable {
 
-    public ListView<String> listView;
+    private static final int SIZE = 256;
 
-    public TextField textField;
+    public ListView<String> clientView;
+    public ListView<String> serverView;
+
+    public Label clientLabel;
+    public Label serverLabel;
 
     private DataInputStream is;
     private DataOutputStream os;
@@ -30,30 +31,23 @@ public class ClientController implements Initializable {
 
     private byte[] buf;
 
-    public void sendMessage(ActionEvent actionEvent) throws IOException {
-        String fileName = textField.getText();
-        File currentFile = currentDir.toPath().resolve(fileName).toFile();
-        os.writeUTF("#SEND#FILE#");
-        os.writeUTF(fileName);
-        os.writeLong(currentFile.length());
-        try (FileInputStream is = new FileInputStream(currentFile)) {
-            while (true) {
-                int read = is.read(buf);
-                if (read == - 1) {
-                    break;
-                }
-                os.write(buf, 0, read);
-            }
-        }
-        os.flush();
-        textField.clear();
-    }
-
     private void read() {
         try {
             while (true) {
-                String message = is.readUTF();
-                Platform.runLater(() -> textField.setText(message));
+                String command = is.readUTF();
+                if (command.equals("#LIST")) {
+                    Platform.runLater(()-> serverView.getItems().clear());
+                    int count = is.readInt();
+                    for (int i = 0; i < count; i++) {
+                        String fileName = is.readUTF();
+                        Platform.runLater(() -> serverView.getItems().add(fileName));
+                    }
+                }
+                if (command.equals("#SEND#FILE ")) {
+                    SenderUtils.getFileFromInputStream(is, currentDir);
+                    //client state updated
+                    Platform.runLater(this::fillCurrentDirFiles);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,23 +56,37 @@ public class ClientController implements Initializable {
     }
 
     private void fillCurrentDirFiles() {
-        listView.getItems().clear();
-        listView.getItems().add("..");
-        listView.getItems().addAll(currentDir.list());
+        clientView.getItems().clear();
+        clientView.getItems().add("..");
+        clientView.getItems().addAll(currentDir.list());
+        clientLabel.setText(getClientFilesDetails());
+    }
+
+    private String getClientFilesDetails() {
+        File[] files = currentDir.listFiles();
+        long size = 0;
+        String label;
+        if (files != null) {
+            label = files.length + " files in this dir. ";
+            for (File file : files) {
+                size+=file.length();
+            }
+            label+="Summary size: " + size/1024 + " Kb ";
+        }else {
+            label= "Current dir is empty.";
+        }
+        return label;
     }
 
     private void initClickListener() {
-        listView.setOnMouseClicked(e -> {
+        clientView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                String fileName = listView.getSelectionModel().getSelectedItem();
+                String fileName = clientView.getSelectionModel().getSelectedItem();
                 System.out.println("Выбран файл: " + fileName);
                 Path path = currentDir.toPath().resolve(fileName);
                 if (Files.isDirectory(path)) {
                     currentDir = path.toFile();
                     fillCurrentDirFiles();
-                    textField.clear();
-                } else {
-                    textField.setText(fileName);
                 }
             }
         });
@@ -100,5 +108,18 @@ public class ClientController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void download(ActionEvent actionEvent) throws IOException {
+        String fileName = serverView.getSelectionModel().getSelectedItem();
+        os.writeUTF("#GET#FILE");
+        os.writeUTF(fileName);
+        os.flush();
+    }
+
+    public void upload(ActionEvent actionEvent) throws IOException {
+        String fileName = clientView.getSelectionModel().getSelectedItem();
+        File currentFile = currentDir.toPath().resolve(fileName).toFile();
+        SenderUtils.loadFileToOutputStream(os, currentFile);
     }
 }
