@@ -8,7 +8,7 @@
         <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
         <ListView fx:id="serverView" layoutX="269.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
         <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
-        <Label fx:id="severLabel" layoutX="269.0" layoutY="590.0" text="Label" />
+        <Label fx:id="serverLabel" layoutX="269.0" layoutY="590.0" text="Label" />
         <Button layoutX="269.0" layoutY="69.0" mnemonicParsing="false" onAction="#download" text="Скачать" />
         <Button layoutX="10.0" layoutY="69.0" mnemonicParsing="false" onAction="#upload" text="Загрузить" />
     </children>

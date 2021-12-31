@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="lesson 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +50,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
-  <component name="RunManager" selected="Application.ClientApp">
+  <component name="RunManager" selected="Application.NioEchoServer">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -93,8 +93,10 @@
       </method>
     </configuration>
     <configuration name="NioEchoServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.NioEchoServer" />
-      <module name="cloud-storage-jan-2022" />
+      <module name="cloud-storage" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
@@ -135,9 +137,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.NioEchoServer" />
         <item itemvalue="Application.ClientApp" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="Application.NioEchoServer" />
         <item itemvalue="Application.BuffersExample" />
         <item itemvalue="Application.PathExample" />
       </list>
@@ -157,6 +159,14 @@
       <workItem from="1640282498161" duration="4517000" />
       <workItem from="1640625050065" duration="5298000" />
     </task>
+    <task id="LOCAL-00001" summary="lesson 1">
+      <created>1640874123689</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640874123693</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,5 +205,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="lesson 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="lesson 1" />
   </component>
 </project>
