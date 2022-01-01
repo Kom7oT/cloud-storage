@@ -1,5 +1,7 @@
 package com.geekbrains.cloud.nio;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,8 +11,12 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NioEchoServer {
 
@@ -21,12 +27,13 @@ public class NioEchoServer {
      * cat file_name - распечатать содержание файла на экран
      * mkdir dir_name - создать директорию в текущей
      * touch file_name - создать пустой файл в текущей директории
-     * */
+     */
 
-    private ServerSocketChannel serverChannel;
-    private Selector selector;
-    private ByteBuffer buf;
+    private final ServerSocketChannel serverChannel;
+    private final Selector selector;
+    private final ByteBuffer buf;
     private final String rootPath = "serverDir";
+    private String dirPath;
 
     public NioEchoServer() throws IOException {
         buf = ByteBuffer.allocate(1024);
@@ -76,19 +83,43 @@ public class NioEchoServer {
         String command = new String(buffer, StandardCharsets.UTF_8)
                 .replace("\n", "")
                 .replace("\r", "");
-        if (command.equals("--help")) {
-            channel.write(ByteBuffer.wrap("ls - show file list\n\r".getBytes()));
-            System.out.println("Received command: " + command);
-        }
-        if (command.equals("ls")) {
-            channel.write(ByteBuffer.wrap(getFilesList().getBytes()));
-            channel.write(ByteBuffer.wrap("\n\r".getBytes()));
-            System.out.println("Received command: " + command);
+
+        try {
+
+
+            if (command.equals("--help")) {
+                channel.write(ByteBuffer.wrap("ls - show file list\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("cd dir_name - move to directory\n\r".getBytes()));
+                System.out.println("Received command: " + command);
+            }
+
+            if (command.equals("ls")) {
+                channel.write(ByteBuffer.wrap(getFilesList(rootPath).getBytes()));
+                channel.write(ByteBuffer.wrap("\n\r".getBytes()));
+                System.out.println("Received command: " + command);
+            }
+            String[] words = command.split(" "); //Отделение второго слова
+            String secondWord = words[1];
+
+            if (command.equals("cd " + secondWord) && getDirList().contains(secondWord)) {
+                channel.write(ByteBuffer.wrap("---------------------------\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap(getFilesList(secondWord).getBytes()));
+                channel.write(ByteBuffer.wrap("\n\r".getBytes()));
+                System.out.println("Received command: " + command);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+
         }
     }
 
-    private String getFilesList() {
-        return String.join(" ", new File(rootPath).list());
+    private String getFilesList(String dirPath) throws NullPointerException {
+        return String.join("\n\r", Objects.requireNonNull(new File(dirPath).list()));
+    }
+
+    private String getDirList() throws IOException {
+        return (String.valueOf(Files.walk(Paths.get(rootPath), 1)
+                .filter(Files::isDirectory)
+                .collect(Collectors.toList())));
     }
 
     private void handleAccept() throws IOException {
