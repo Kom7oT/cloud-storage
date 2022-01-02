@@ -1,7 +1,5 @@
 package com.geekbrains.cloud.nio;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,7 +9,9 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Objects;
@@ -33,7 +33,7 @@ public class NioEchoServer {
     private final Selector selector;
     private final ByteBuffer buf;
     private final String rootPath = "serverDir";
-    private String dirPath;
+    private String currentDir = rootPath;
 
     public NioEchoServer() throws IOException {
         buf = ByteBuffer.allocate(1024);
@@ -88,25 +88,43 @@ public class NioEchoServer {
 
 
             if (command.equals("--help")) {
-                channel.write(ByteBuffer.wrap("ls - show file list\n\r".getBytes()));
-                channel.write(ByteBuffer.wrap("cd dir_name - move to directory\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("---------------------------\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*ls             - show file list\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*cd dir_name    - move to directory\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*cat file_name  - open file\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*mkdir dir_name - create directory\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("---------------------------\n\r".getBytes()));
                 System.out.println("Received command: " + command);
             }
-
+            //Содрежимое каталога
             if (command.equals("ls")) {
-                channel.write(ByteBuffer.wrap(getFilesList(rootPath).getBytes()));
-                channel.write(ByteBuffer.wrap("\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap(("---------------------------\n\r" + getFilesList(currentDir) + "\n\r---------------------------\n\r").getBytes()));
                 System.out.println("Received command: " + command);
             }
-            String[] words = command.split(" "); //Отделение второго слова
+            //Отделение второго слова команды
+            String[] words = command.split(" ");
             String secondWord = words[1];
 
+            //Переместиться в директорию
             if (command.equals("cd " + secondWord) && getDirList().contains(secondWord)) {
-                channel.write(ByteBuffer.wrap("---------------------------\n\r".getBytes()));
-                channel.write(ByteBuffer.wrap(getFilesList(secondWord).getBytes()));
-                channel.write(ByteBuffer.wrap("\n\r".getBytes()));
+                currentDir = secondWord;
+                channel.write(ByteBuffer.wrap(("---------------------------\n\r" + getFilesList(currentDir) + "\n\r---------------------------\n\r").getBytes()));
                 System.out.println("Received command: " + command);
             }
+
+            //Распечатать содержимое файла
+            if (command.equals("cat " + secondWord)) {
+                channel.write(ByteBuffer.wrap(("---------------------------\n\r" + (fileContent(currentDir, secondWord) + "\n\r---------------------------\n\r")).getBytes(StandardCharsets.UTF_8)));
+                System.out.println("Received command: " + command);
+            }
+
+            //Создание директории
+            if (command.equals("mkdir " + secondWord)) {
+                System.out.println("Received command: " + command);
+                System.out.println(createDir(currentDir, secondWord));
+                channel.write(ByteBuffer.wrap((createDir(currentDir, secondWord) + "\n\r").getBytes(StandardCharsets.UTF_8)));
+            }
+
         } catch (ArrayIndexOutOfBoundsException e) {
 
         }
@@ -120,6 +138,28 @@ public class NioEchoServer {
         return (String.valueOf(Files.walk(Paths.get(rootPath), 1)
                 .filter(Files::isDirectory)
                 .collect(Collectors.toList())));
+    }
+
+    private String fileContent(String dirPath, String fileName) throws IOException {
+        String result;
+        if (Files.isRegularFile(Paths.get(dirPath + "\\" + fileName))) {
+            result = String.valueOf(Files.lines(Paths.get(dirPath + "\\" + fileName), StandardCharsets.UTF_8)
+                    .collect(Collectors.toList()));
+        } else result = "File not found";
+        return result;
+    }
+
+    private String createDir(String dirPath, String dirName) throws IOException {
+        String result = null;
+        try {
+            Files.createDirectory(Paths.get(dirPath + "\\" + dirName));
+            if (Files.exists(Paths.get(dirPath + "\\" + dirName))) {
+                result = "Directory " + dirPath + "\\" + dirName + " created";
+            }
+        } catch (FileAlreadyExistsException e) {
+            result = "Directory already exists";
+        }
+        return result;
     }
 
     private void handleAccept() throws IOException {
