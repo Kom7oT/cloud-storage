@@ -9,10 +9,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -89,10 +86,11 @@ public class NioEchoServer {
 
             if (command.equals("--help")) {
                 channel.write(ByteBuffer.wrap("---------------------------\n\r".getBytes()));
-                channel.write(ByteBuffer.wrap("*ls             - show file list\n\r".getBytes()));
-                channel.write(ByteBuffer.wrap("*cd dir_name    - move to directory\n\r".getBytes()));
-                channel.write(ByteBuffer.wrap("*cat file_name  - open file\n\r".getBytes()));
-                channel.write(ByteBuffer.wrap("*mkdir dir_name - create directory\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*ls              - show file list\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*cd dir_name     - move to directory\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*cat file_name   - open file\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*mkdir dir_name  - create directory\n\r".getBytes()));
+                channel.write(ByteBuffer.wrap("*touch file_name - create empty file in this dir\n\r".getBytes()));
                 channel.write(ByteBuffer.wrap("---------------------------\n\r".getBytes()));
                 System.out.println("Received command: " + command);
             }
@@ -122,7 +120,12 @@ public class NioEchoServer {
             if (command.equals("mkdir " + secondWord)) {
                 System.out.println("Received command: " + command);
                 System.out.println(createDir(currentDir, secondWord));
-                channel.write(ByteBuffer.wrap((createDir(currentDir, secondWord) + "\n\r").getBytes(StandardCharsets.UTF_8)));
+            }
+
+            //Создание файла
+            if (command.equals("touch " + secondWord)) {
+                System.out.println("Received command: " + command);
+                System.out.println(createFile(currentDir, secondWord));
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -130,8 +133,14 @@ public class NioEchoServer {
         }
     }
 
-    private String getFilesList(String dirPath) throws NullPointerException {
-        return String.join("\n\r", Objects.requireNonNull(new File(dirPath).list()));
+    private String getFilesList(String dirPath) {
+        String result = "";
+        try {
+            result = String.join("\n\r", Objects.requireNonNull(new File(dirPath).list()));
+        } catch (NullPointerException e) {
+
+        }
+        return result;
     }
 
     private String getDirList() throws IOException {
@@ -150,7 +159,7 @@ public class NioEchoServer {
     }
 
     private String createDir(String dirPath, String dirName) throws IOException {
-        String result = null;
+        String result = "";
         try {
             Files.createDirectory(Paths.get(dirPath + "\\" + dirName));
             if (Files.exists(Paths.get(dirPath + "\\" + dirName))) {
@@ -158,6 +167,19 @@ public class NioEchoServer {
             }
         } catch (FileAlreadyExistsException e) {
             result = "Directory already exists";
+        }
+        return result;
+    }
+
+    public static String createFile(String dirPath, String fileName) throws IOException {
+        String result = "";
+        try {
+            Files.createFile(Paths.get(dirPath + "\\" + fileName));
+            if (Files.exists(Paths.get(dirPath + "\\" + fileName))) {
+                result = "File " + dirPath + "\\" + fileName + " created";
+            }
+        } catch (FileAlreadyExistsException e) {
+            result = "File " + dirPath + "\\" + fileName + " already exists";
         }
         return result;
     }
