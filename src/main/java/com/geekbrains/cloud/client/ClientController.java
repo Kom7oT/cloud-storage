@@ -1,79 +1,84 @@
 package com.geekbrains.cloud.client;
 
-import java.io.*;
-import java.net.Socket;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ResourceBundle;
-
-import com.geekbrains.cloud.utils.SenderUtils;
+import com.geekbrains.cloud.model.*;
+import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
+import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import lombok.extern.slf4j.Slf4j;
 
-public class ClientController implements Initializable {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
-    private static final int SIZE = 256;
+@Slf4j
+
+public class ClientController {
 
     public ListView<String> clientView;
     public ListView<String> serverView;
-
     public Label clientLabel;
     public Label serverLabel;
+    public HBox authorization;
+    public AnchorPane mainBox;
+    public Button download;
+    public Button upload;
+    private Path currentDir;
+    @FXML
+    private TextField loginField;
+    @FXML
+    private PasswordField passwordField;
+    // sync mode
+    // recommended mode
+    private ObjectEncoderOutputStream os;
+    private ObjectDecoderInputStream is;
 
-    private DataInputStream is;
-    private DataOutputStream os;
+    private void fillCurrentDirFiles() {
 
-    private File currentDir;
-
-    private byte[] buf;
-
-    private void read() {
-        try {
-            while (true) {
-                String command = is.readUTF();
-                if (command.equals("#LIST")) {
-                    Platform.runLater(()-> serverView.getItems().clear());
-                    int count = is.readInt();
-                    for (int i = 0; i < count; i++) {
-                        String fileName = is.readUTF();
-                        Platform.runLater(() -> serverView.getItems().add(fileName));
-                    }
-                }
-                if (command.equals("#SEND#FILE ")) {
-                    SenderUtils.getFileFromInputStream(is, currentDir);
-                    //client state updated
-                    Platform.runLater(this::fillCurrentDirFiles);
-                }
+        Platform.runLater(() -> {
+            try {
+                clientView.getItems().clear();
+                clientView.getItems().add("..");
+                clientView.getItems().addAll(currentDir.toFile().list());
+                clientLabel.setText(getClientFilesDetails());
+            } catch (NullPointerException e) {
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // reconnect to server
+        });
+    }
+
+    public void setAuthorized(boolean isAuthorized) {
+        if (!isAuthorized) {
+            mainBox.setVisible(false);
+            mainBox.setManaged(false);
+            authorization.setVisible(true);
+            authorization.setManaged(true);
+        } else {
+            mainBox.setVisible(true);
+            mainBox.setManaged(true);
+            authorization.setVisible(false);
+            authorization.setManaged(false);
         }
     }
 
-    private void fillCurrentDirFiles() {
-        clientView.getItems().clear();
-        clientView.getItems().add("..");
-        clientView.getItems().addAll(currentDir.list());
-        clientLabel.setText(getClientFilesDetails());
-    }
-
     private String getClientFilesDetails() {
-        File[] files = currentDir.listFiles();
+        File[] files = currentDir.toFile().listFiles();
         long size = 0;
         String label;
         if (files != null) {
-            label = files.length + " files in this dir. ";
+            label = files.length + " files in current dir. ";
             for (File file : files) {
-                size+=file.length();
+                size += file.length();
             }
-            label+="Summary size: " + size/1024 + " Kb ";
-        }else {
-            label= "Current dir is empty.";
+            label += "Summary size: " + size / 1024 + " Kb.";
+        } else {
+            label = "Current dir is empty";
         }
         return label;
     }
@@ -83,43 +88,79 @@ public class ClientController implements Initializable {
             if (e.getClickCount() == 2) {
                 String fileName = clientView.getSelectionModel().getSelectedItem();
                 System.out.println("Выбран файл: " + fileName);
-                Path path = currentDir.toPath().resolve(fileName);
+                Path path = currentDir.resolve(fileName);
+
                 if (Files.isDirectory(path)) {
-                    currentDir = path.toFile();
-                    fillCurrentDirFiles();
+                    currentDir = path;
+                    ClientController.this.fillCurrentDirFiles();
                 }
             }
         });
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            buf = new byte[256];
-            currentDir = new File(System.getProperty("user.home"));
+    public void connect() {
+
+        Thread t = new Thread(() -> {
+
+            currentDir = Paths.get(System.getProperty("user.home"));
             fillCurrentDirFiles();
             initClickListener();
-            Socket socket = new Socket("localhost", 8189);
-            is = new DataInputStream(socket.getInputStream());
-            os = new DataOutputStream(socket.getOutputStream());
-            Thread readThread = new Thread(this::read);
-            readThread.setDaemon(true);
-            readThread.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            try {
+
+                while (true) {
+                    AbstractMessage message = Network.readObject();
+                    log.info(String.valueOf(message.getType()));
+                    switch (message.getType()) {
+                        case AUTH_REQUEST:
+                            AuthRequest ar = (AuthRequest) message;
+                            if (ar.isAuthorization()) {
+                                setAuthorized(ar.isAuthorization());
+                            }
+                            break;
+                        case FILE_MESSAGE:
+                            FileMessage fileMessage = (FileMessage) message;
+                            Files.write(currentDir.resolve(fileMessage.getFileName()), fileMessage.getBytes());
+                            fillCurrentDirFiles();
+                            break;
+                        case LIST:
+                            FilesList list = (FilesList) message;
+                            updateServerView(list.getList());
+                    }
+
+                }
+
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+            } finally {
+                Network.stop();
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private void updateServerView(List<String> names) {
+        Platform.runLater(() -> {
+            serverView.getItems().clear();
+            serverView.getItems().addAll(names);
+        });
     }
 
     public void download(ActionEvent actionEvent) throws IOException {
         String fileName = serverView.getSelectionModel().getSelectedItem();
-        os.writeUTF("#GET#FILE");
-        os.writeUTF(fileName);
-        os.flush();
+        Network.sendMsg(new FileRequest(fileName));
     }
 
     public void upload(ActionEvent actionEvent) throws IOException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
-        File currentFile = currentDir.toPath().resolve(fileName).toFile();
-        SenderUtils.loadFileToOutputStream(os, currentFile);
+        FileMessage fileMessage = new FileMessage(currentDir.resolve(fileName));
+        Network.sendMsg(fileMessage);
+    }
+
+    public void tryToAuth() throws IOException, ClassNotFoundException {
+        Network.start();
+        AuthRequest authRequest = new AuthRequest(loginField.getText(), passwordField.getText());
+        Network.sendMsg(authRequest);
+        connect();
     }
 }

@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="lesson 1">
+    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="Добавлена возможность работы с файлами и директориями через telnet">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serverDir/1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/serverDir/asd/1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serverDir/123.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/serverDir/asd/123.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,9 +19,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="FxmlFile" />
         <option value="Class" />
       </list>
@@ -42,15 +52,24 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="copyright" />
   </component>
-  <component name="RunManager" selected="Application.NioEchoServer">
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\java\cloud-storage\serverDir\asd" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ClientApp">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -64,12 +83,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BuffersExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.BuffersExample" />
-      <module name="cloud-storage-jan-2022" />
+    <configuration name="Auth" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.client.Auth" />
+      <module name="cloud-storage" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
+          <option name="PATTERN" value="com.geekbrains.cloud.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -92,14 +111,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NioEchoServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.NioEchoServer" />
+    <configuration name="CloudServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.netty.CloudServer" />
       <module name="cloud-storage" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
+          <option name="PATTERN" value="com.geekbrains.cloud.netty.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -107,12 +124,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PathExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.PathExample" />
-      <module name="cloud-storage-jan-2022" />
+    <configuration name="NettyEchoServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.netty.NettyEchoServer" />
+      <module name="cloud-storage" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
+          <option name="PATTERN" value="com.geekbrains.cloud.netty.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -120,14 +137,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.server.Server" />
+    <configuration name="StreamExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.stream.StreamExamples" />
       <module name="cloud-storage" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.server.*" />
+          <option name="PATTERN" value="com.geekbrains.cloud.stream.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -137,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.NioEchoServer" />
         <item itemvalue="Application.ClientApp" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.BuffersExample" />
-        <item itemvalue="Application.PathExample" />
+        <item itemvalue="Application.CloudServer" />
+        <item itemvalue="Application.Auth" />
+        <item itemvalue="Application.NettyEchoServer" />
+        <item itemvalue="Application.StreamExamples" />
       </list>
     </recent_temporary>
   </component>
@@ -166,7 +181,49 @@
       <option name="project" value="LOCAL" />
       <updated>1640874123693</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="lesson 2. Выполнил ls">
+      <created>1640950593778</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640950593778</updated>
+    </task>
+    <task id="LOCAL-00003" summary="lesson 2. Добавил перемещение по директориям">
+      <created>1641074446250</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1641074446250</updated>
+    </task>
+    <task id="LOCAL-00004" summary="lesson 2. Добавил открытие файлов и создание директорий">
+      <created>1641142014481</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1641142014481</updated>
+    </task>
+    <task id="LOCAL-00005" summary="lesson 2. Добавил создание файлов">
+      <created>1641644184069</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1641644184069</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Создал и настроил nio сервер, с возможностью работы с файлами и директориями через telnet">
+      <created>1642855170900</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1642855170900</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Добавлена возможность работы с файлами и директориями через telnet">
+      <created>1642933917472</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1642933917472</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +265,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="lesson 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="lesson 1" />
+    <MESSAGE value="lesson 2. Выполнил ls" />
+    <MESSAGE value="lesson 2. Добавил перемещение по директориям" />
+    <MESSAGE value="lesson 2. Добавил открытие файлов и создание директорий" />
+    <MESSAGE value="lesson 2. Добавил создание файлов" />
+    <MESSAGE value="Создал и настроил nio сервер, с возможностью работы с файлами и директориями через telnet" />
+    <MESSAGE value="Добавлена возможность работы с файлами и директориями через telnet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена возможность работы с файлами и директориями через telnet" />
+  </component>
+  <component name="XPathView.XPathProjectComponent">
+    <history />
+    <find-history />
   </component>
 </project>
