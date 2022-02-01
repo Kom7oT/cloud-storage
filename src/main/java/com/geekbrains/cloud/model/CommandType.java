@@ -4,5 +4,6 @@ public enum CommandType {
     AUTH_REQUEST,
     FILE_MESSAGE,
     FILE_REQUEST,
-    LIST
+    LIST,
+    REFRESH_REQUEST
 }

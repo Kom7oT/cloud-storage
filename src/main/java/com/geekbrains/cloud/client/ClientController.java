@@ -30,7 +30,10 @@ public class ClientController {
     public AnchorPane mainBox;
     public Button download;
     public Button upload;
-    private Path currentDir;
+    public Label clientPath;
+    public Button clientUp;
+    private Path clientDir;
+    private Path serverDir;
     @FXML
     private TextField loginField;
     @FXML
@@ -45,9 +48,9 @@ public class ClientController {
         Platform.runLater(() -> {
             try {
                 clientView.getItems().clear();
-                clientView.getItems().add("..");
-                clientView.getItems().addAll(currentDir.toFile().list());
+                clientView.getItems().addAll(clientDir.toFile().list());
                 clientLabel.setText(getClientFilesDetails());
+                clientPath.setText(String.valueOf(clientDir));
             } catch (NullPointerException e) {
             }
         });
@@ -68,7 +71,7 @@ public class ClientController {
     }
 
     private String getClientFilesDetails() {
-        File[] files = currentDir.toFile().listFiles();
+        File[] files = clientDir.toFile().listFiles();
         long size = 0;
         String label;
         if (files != null) {
@@ -83,16 +86,35 @@ public class ClientController {
         return label;
     }
 
-    private void initClickListener() {
+    private void clientInitClickListener() {
         clientView.setOnMouseClicked(e -> {
+            String fileName = clientView.getSelectionModel().getSelectedItem();
             if (e.getClickCount() == 2) {
-                String fileName = clientView.getSelectionModel().getSelectedItem();
                 System.out.println("Выбран файл: " + fileName);
-                Path path = currentDir.resolve(fileName);
+                Path path = clientDir.resolve(fileName);
 
                 if (Files.isDirectory(path)) {
-                    currentDir = path;
+                    clientDir = path;
                     ClientController.this.fillCurrentDirFiles();
+                }
+            }
+        });
+    }private void serverInitClickListener() {
+        serverView.setOnMouseClicked(e -> {
+            String fileName = serverView.getSelectionModel().getSelectedItem();
+            if (e.getClickCount() == 2) {
+                System.out.println("Выбран файл: " + fileName);
+                Path path = Paths.get("serverDir").resolve(serverDir).resolve(fileName);
+                System.out.println("server dir = " + path);
+                RefreshRequest refreshRequest = new RefreshRequest(String.valueOf(serverDir));
+                System.out.println(refreshRequest);
+                Network.sendMsg(refreshRequest);
+
+//                FileRequest fileRequest = new FileRequest("serverDir/asd");
+//                Network.sendMsg(fileRequest);
+
+                if (Files.isRegularFile(path)) {
+                    System.out.println("YESS");
                 }
             }
         });
@@ -102,9 +124,10 @@ public class ClientController {
 
         Thread t = new Thread(() -> {
 
-            currentDir = Paths.get(System.getProperty("user.home"));
+            clientDir = Paths.get(System.getProperty("user.home"));
             fillCurrentDirFiles();
-            initClickListener();
+            clientInitClickListener();
+            serverInitClickListener();
             try {
 
                 while (true) {
@@ -115,11 +138,12 @@ public class ClientController {
                             AuthRequest ar = (AuthRequest) message;
                             if (ar.isAuthorization()) {
                                 setAuthorized(ar.isAuthorization());
+                                serverDir = Paths.get(ar.getLogin());
                             }
                             break;
                         case FILE_MESSAGE:
                             FileMessage fileMessage = (FileMessage) message;
-                            Files.write(currentDir.resolve(fileMessage.getFileName()), fileMessage.getBytes());
+                            Files.write(clientDir.resolve(fileMessage.getFileName()), fileMessage.getBytes());
                             fillCurrentDirFiles();
                             break;
                         case LIST:
@@ -153,7 +177,7 @@ public class ClientController {
 
     public void upload(ActionEvent actionEvent) throws IOException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
-        FileMessage fileMessage = new FileMessage(currentDir.resolve(fileName));
+        FileMessage fileMessage = new FileMessage(clientDir.resolve(fileName));
         Network.sendMsg(fileMessage);
     }
 
@@ -162,5 +186,10 @@ public class ClientController {
         AuthRequest authRequest = new AuthRequest(loginField.getText(), passwordField.getText());
         Network.sendMsg(authRequest);
         connect();
+    }
+
+    public void toParentDir(ActionEvent actionEvent) {
+        clientDir = clientDir.getParent();
+        fillCurrentDirFiles();
     }
 }

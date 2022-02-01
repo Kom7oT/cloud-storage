@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
     <HBox fx:id="authorization" alignment="CENTER" focusTraversable="true" layoutY="301.0" prefHeight="25.0" prefWidth="519.0" VBox.vgrow="ALWAYS">
         <TextField fx:id="loginField" alignment="CENTER" focusTraversable="false" promptText="Логин" HBox.hgrow="ALWAYS">
          <HBox.margin>
@@ -22,12 +22,16 @@
     </HBox>
 
     <AnchorPane fx:id="mainBox" visible="false">
+        <Label fx:id="clientPath" layoutX="10.0" layoutY="85.0" text="Label"/>
         <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
         <ListView fx:id="serverView" layoutX="269.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
         <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
         <Label fx:id="serverLabel" layoutX="269.0" layoutY="590.0" text="Label" />
-        <Button fx:id="download" layoutX="269.0" layoutY="69.0" mnemonicParsing="false" onAction="#download" text="Скачать" />
-        <Button fx:id="upload" layoutX="10.0" layoutY="69.0" mnemonicParsing="false" onAction="#upload" text="Загрузить" />
+        <HBox>
+        <Button fx:id="clientUp"  HBox.hgrow="ALWAYS" mnemonicParsing="false" onAction="#toParentDir" text="UP" />
+        <Button fx:id="download" HBox.hgrow="ALWAYS" mnemonicParsing="false" onAction="#download" text="Скачать" />
+        <Button fx:id="upload"  HBox.hgrow="ALWAYS" mnemonicParsing="false" onAction="#upload" text="Загрузить" />
+        </HBox>
     </AnchorPane>
     <SwingNode layoutX="97.0" layoutY="417.0" />
 </AnchorPane>
