@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки">
+    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/FilesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/FilesList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/RefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/RefreshRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +69,7 @@
       <recent name="D:\java\cloud-storage\serverDir\asd" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ClientApp">
+  <component name="RunManager" selected="Application.CloudServer">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -122,8 +117,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientApp" />
         <item itemvalue="Application.CloudServer" />
+        <item itemvalue="Application.ClientApp" />
       </list>
     </recent_temporary>
   </component>
@@ -197,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643537520256</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения">
+      <created>1643834413596</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1643834413596</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,7 +248,8 @@
     <MESSAGE value="Создал и настроил nio сервер, с возможностью работы с файлами и директориями через telnet" />
     <MESSAGE value="Добавлена возможность работы с файлами и директориями через telnet" />
     <MESSAGE value="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки" />
-    <option name="LAST_COMMIT_MESSAGE" value="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки" />
+    <MESSAGE value="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />

@@ -58,11 +58,12 @@ public class FilesHandler extends SimpleChannelInboundHandler<AbstractMessage> {
                     break;
                 case REFRESH_REQUEST:
                     RefreshRequest refreshRequest = (RefreshRequest) message;
-                    currentDir = Paths.get(refreshRequest.getDir());
-                    if (Files.isDirectory(currentDir)) {
+
+                    if (Files.isDirectory(Paths.get(refreshRequest.getDir()))) {
+                        currentDir = Paths.get(refreshRequest.getDir());
                         sendList(ctx);
                     }
-                    ctx.writeAndFlush(refreshRequest);
+                  ctx.writeAndFlush(refreshRequest);
                     break;
             }
         } catch (ClassCastException e) {
@@ -73,7 +74,7 @@ public class FilesHandler extends SimpleChannelInboundHandler<AbstractMessage> {
     }
 
     private void sendList(ChannelHandlerContext ctx) throws IOException {
-        if (currentDir != null ) {
+        if (currentDir != null && Files.isDirectory(currentDir)) {
             FilesList fl = new FilesList(currentDir);
             ctx.writeAndFlush(fl);
         }
