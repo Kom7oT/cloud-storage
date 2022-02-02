@@ -13,8 +13,7 @@ public class FilesPipeline extends ChannelInitializer<SocketChannel> {
         socketChannel.pipeline().addLast(
                 new ObjectEncoder(),
                 new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
-                new FilesHandler(),
-                new AuthHandler()
+                new FilesHandler()
         );
     }
 }

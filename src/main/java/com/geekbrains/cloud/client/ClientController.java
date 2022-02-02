@@ -31,7 +31,9 @@ public class ClientController {
     public Button download;
     public Button upload;
     public Label clientPath;
+    public Label serverPath;
     public Button clientUp;
+    public Button serverUp;
     private Path clientDir;
     private Path serverDir;
     @FXML
@@ -92,30 +94,22 @@ public class ClientController {
             if (e.getClickCount() == 2) {
                 System.out.println("Выбран файл: " + fileName);
                 Path path = clientDir.resolve(fileName);
-
                 if (Files.isDirectory(path)) {
                     clientDir = path;
                     ClientController.this.fillCurrentDirFiles();
                 }
             }
         });
-    }private void serverInitClickListener() {
+
+    }
+
+    private void serverInitClickListener() {
         serverView.setOnMouseClicked(e -> {
             String fileName = serverView.getSelectionModel().getSelectedItem();
             if (e.getClickCount() == 2) {
                 System.out.println("Выбран файл: " + fileName);
-                Path path = Paths.get("serverDir").resolve(serverDir).resolve(fileName);
-                System.out.println("server dir = " + path);
-                RefreshRequest refreshRequest = new RefreshRequest(String.valueOf(serverDir));
-                System.out.println(refreshRequest);
-                Network.sendMsg(refreshRequest);
-
-//                FileRequest fileRequest = new FileRequest("serverDir/asd");
-//                Network.sendMsg(fileRequest);
-
-                if (Files.isRegularFile(path)) {
-                    System.out.println("YESS");
-                }
+                Path path = serverDir.resolve(fileName);
+                sendPath(path);
             }
         });
     }
@@ -129,7 +123,6 @@ public class ClientController {
             clientInitClickListener();
             serverInitClickListener();
             try {
-
                 while (true) {
                     AbstractMessage message = Network.readObject();
                     log.info(String.valueOf(message.getType()));
@@ -148,6 +141,7 @@ public class ClientController {
                             break;
                         case LIST:
                             FilesList list = (FilesList) message;
+                            serverDir = Paths.get(list.getCurrentDir());
                             updateServerView(list.getList());
                     }
 
@@ -167,7 +161,13 @@ public class ClientController {
         Platform.runLater(() -> {
             serverView.getItems().clear();
             serverView.getItems().addAll(names);
+            serverPath.setText(String.valueOf(serverDir));
         });
+    }
+
+    private void sendPath(Path dir) {
+        RefreshRequest refreshRequest = new RefreshRequest(String.valueOf(dir));
+        Network.sendMsg(refreshRequest);
     }
 
     public void download(ActionEvent actionEvent) throws IOException {
@@ -179,6 +179,7 @@ public class ClientController {
         String fileName = clientView.getSelectionModel().getSelectedItem();
         FileMessage fileMessage = new FileMessage(clientDir.resolve(fileName));
         Network.sendMsg(fileMessage);
+        sendPath(serverDir);
     }
 
     public void tryToAuth() throws IOException, ClassNotFoundException {
@@ -188,8 +189,15 @@ public class ClientController {
         connect();
     }
 
-    public void toParentDir(ActionEvent actionEvent) {
-        clientDir = clientDir.getParent();
-        fillCurrentDirFiles();
+    public void toParentClientDir(ActionEvent actionEvent) {
+        if (clientDir != null) {
+            clientDir = clientDir.getParent();
+            fillCurrentDirFiles();
+        }
+    }
+
+    public void toParentServerDir(ActionEvent actionEvent) {
+        serverDir = serverDir.getParent();
+        sendPath(serverDir);
     }
 }

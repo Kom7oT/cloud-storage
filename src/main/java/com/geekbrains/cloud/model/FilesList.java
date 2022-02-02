@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,13 +14,18 @@ import java.util.stream.Collectors;
 public class FilesList extends AbstractMessage {
 
     private List<String> list;
-    private String root;
 
-    public FilesList(String root, Path dir) throws IOException {
-       Path currentDir =  Paths.get(root).resolve(dir);
-        list = Files.list(currentDir)
+    public String getCurrentDir() {
+        return currentDir;
+    }
+
+    String currentDir;
+
+    public FilesList(Path dir) throws IOException {
+        list = Files.list(dir)
                 .map(p -> p.getFileName().toString())
                 .collect(Collectors.toList());
+        currentDir = String.valueOf(dir);
     }
 
     @Override

@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverDir/1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/serverDir/asd/1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverDir/123.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/serverDir/asd/123.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/CommandType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/CommandType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/FilesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/FilesList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/RefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/RefreshRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesPipeline.java" afterDir="false" />
@@ -69,6 +67,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\java\cloud-storage\serverDir\root\123" />
       <recent name="D:\java\cloud-storage\src\main\java\com\geekbrains\cloud\netty" />
       <recent name="D:\java\cloud-storage\src\main\java\com\geekbrains\cloud\client" />
       <recent name="D:\java\cloud-storage\src\main\resources\com\geekbrains\cloud\client" />
@@ -85,19 +84,6 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Auth" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.client.Auth" />
-      <module name="cloud-storage" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -130,39 +116,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NettyEchoServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.netty.NettyEchoServer" />
-      <module name="cloud-storage" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.netty.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StreamExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.stream.StreamExamples" />
-      <module name="cloud-storage" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.stream.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.ClientApp" />
+      <item itemvalue="Application.CloudServer" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientApp" />
         <item itemvalue="Application.CloudServer" />
-        <item itemvalue="Application.NettyEchoServer" />
-        <item itemvalue="Application.Auth" />
-        <item itemvalue="Application.StreamExamples" />
       </list>
     </recent_temporary>
   </component>
