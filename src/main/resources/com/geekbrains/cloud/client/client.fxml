@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
     <HBox fx:id="authorization" alignment="CENTER" focusTraversable="true" layoutY="301.0" prefHeight="25.0" prefWidth="519.0" VBox.vgrow="ALWAYS">
         <TextField fx:id="loginField" alignment="CENTER" focusTraversable="false" promptText="Логин" HBox.hgrow="ALWAYS">
             <HBox.margin>

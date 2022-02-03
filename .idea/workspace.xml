@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/Network.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +71,7 @@
       <recent name="D:\java\cloud-storage\serverDir\asd" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CloudServer">
+  <component name="RunManager" selected="Application.ClientApp">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -117,8 +119,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CloudServer" />
         <item itemvalue="Application.ClientApp" />
+        <item itemvalue="Application.CloudServer" />
       </list>
     </recent_temporary>
   </component>

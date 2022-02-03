@@ -146,10 +146,12 @@ public class ClientController {
                     }
 
                 }
-
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
-            } finally {
+            } catch (NullPointerException e){
+
+            }
+            finally {
                 Network.stop();
             }
         });
@@ -165,6 +167,7 @@ public class ClientController {
         });
     }
 
+    //Передача серверу пути для обновления каталога
     private void sendPath(Path dir) {
         RefreshRequest refreshRequest = new RefreshRequest(String.valueOf(dir));
         Network.sendMsg(refreshRequest);
@@ -182,7 +185,7 @@ public class ClientController {
         sendPath(serverDir);
     }
 
-    public void tryToAuth() throws IOException, ClassNotFoundException {
+    public void tryToAuth() throws RuntimeException {
         Network.start();
         AuthRequest authRequest = new AuthRequest(loginField.getText(), passwordField.getText());
         Network.sendMsg(authRequest);
@@ -190,14 +193,19 @@ public class ClientController {
     }
 
     public void toParentClientDir(ActionEvent actionEvent) {
+        Path root = clientDir.getRoot();
+        clientDir = clientDir.getParent();
         if (clientDir != null) {
-            clientDir = clientDir.getParent();
             fillCurrentDirFiles();
-        }
+        } else clientDir = root;
     }
 
+    //Передача серверу родительского пути от текущего
     public void toParentServerDir(ActionEvent actionEvent) {
+        Path root = serverDir;  //Запоминаем корневой каталог, выше которого не поднимемся, чтобы не поймать NPE
         serverDir = serverDir.getParent();
-        sendPath(serverDir);
+        if (serverDir != null) {
+            sendPath(serverDir);
+        } else serverDir = root;
     }
 }
