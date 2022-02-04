@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="lesson 1">
+    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,9 +16,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="FxmlFile" />
         <option value="Class" />
       </list>
@@ -42,15 +49,29 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="create.test.in.the.same.root" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../chathome_03082021" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="copyright" />
   </component>
-  <component name="RunManager" selected="Application.NioEchoServer">
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\java\cloud-storage\serverDir\root\123" />
+      <recent name="D:\java\cloud-storage\src\main\java\com\geekbrains\cloud\netty" />
+      <recent name="D:\java\cloud-storage\src\main\java\com\geekbrains\cloud\client" />
+      <recent name="D:\java\cloud-storage\src\main\resources\com\geekbrains\cloud\client" />
+      <recent name="D:\java\cloud-storage\serverDir\asd" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ClientApp">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -60,19 +81,6 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BuffersExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.BuffersExample" />
-      <module name="cloud-storage-jan-2022" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -92,14 +100,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NioEchoServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.NioEchoServer" />
+    <configuration name="CloudServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.netty.CloudServer" />
       <module name="cloud-storage" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
+          <option name="PATTERN" value="com.geekbrains.cloud.netty.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -107,41 +113,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PathExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.nio.PathExample" />
-      <module name="cloud-storage-jan-2022" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.nio.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.geekbrains.cloud.server.Server" />
-      <module name="cloud-storage" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.geekbrains.cloud.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.ClientApp" />
+      <item itemvalue="Application.CloudServer" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.NioEchoServer" />
         <item itemvalue="Application.ClientApp" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.BuffersExample" />
-        <item itemvalue="Application.PathExample" />
+        <item itemvalue="Application.CloudServer" />
       </list>
     </recent_temporary>
   </component>
@@ -166,7 +145,63 @@
       <option name="project" value="LOCAL" />
       <updated>1640874123693</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="lesson 2. Выполнил ls">
+      <created>1640950593778</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640950593778</updated>
+    </task>
+    <task id="LOCAL-00003" summary="lesson 2. Добавил перемещение по директориям">
+      <created>1641074446250</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1641074446250</updated>
+    </task>
+    <task id="LOCAL-00004" summary="lesson 2. Добавил открытие файлов и создание директорий">
+      <created>1641142014481</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1641142014481</updated>
+    </task>
+    <task id="LOCAL-00005" summary="lesson 2. Добавил создание файлов">
+      <created>1641644184069</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1641644184069</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Создал и настроил nio сервер, с возможностью работы с файлами и директориями через telnet">
+      <created>1642855170900</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1642855170900</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Добавлена возможность работы с файлами и директориями через telnet">
+      <created>1642933917472</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1642933917472</updated>
+    </task>
+    <task id="LOCAL-00008" summary="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки">
+      <created>1643537520256</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1643537520256</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения">
+      <created>1643834413596</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1643834413596</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +243,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="lesson 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="lesson 1" />
+    <MESSAGE value="lesson 2. Выполнил ls" />
+    <MESSAGE value="lesson 2. Добавил перемещение по директориям" />
+    <MESSAGE value="lesson 2. Добавил открытие файлов и создание директорий" />
+    <MESSAGE value="lesson 2. Добавил создание файлов" />
+    <MESSAGE value="Создал и настроил nio сервер, с возможностью работы с файлами и директориями через telnet" />
+    <MESSAGE value="Добавлена возможность работы с файлами и директориями через telnet" />
+    <MESSAGE value="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки" />
+    <MESSAGE value="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения" />
+  </component>
+  <component name="XPathView.XPathProjectComponent">
+    <history />
+    <find-history />
   </component>
 </project>

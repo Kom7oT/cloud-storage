@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.embed.swing.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="533.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
-    <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
+    <HBox fx:id="authorization" alignment="CENTER" focusTraversable="true" layoutY="301.0" prefHeight="25.0" prefWidth="519.0" VBox.vgrow="ALWAYS">
+        <TextField fx:id="loginField" alignment="CENTER" focusTraversable="false" promptText="Логин" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+                <Insets left="5.0" right="5.0" />
+            </HBox.margin>
+        </TextField>
+        <PasswordField fx:id="passwordField" alignment="CENTER" focusTraversable="false" prefHeight="25.0" prefWidth="223.0" promptText="Пароль">
+            <HBox.margin>
+                <Insets right="5.0" />
+            </HBox.margin>
+        </PasswordField>
+        <Button alignment="CENTER" focusTraversable="false" onAction="#tryToAuth" prefHeight="25.0" prefWidth="111.0" text="Вход" VBox.vgrow="ALWAYS">
+            <HBox.margin>
+                <Insets right="5.0" />
+            </HBox.margin>
+        </Button>
+    </HBox>
+
+    <AnchorPane fx:id="mainBox" visible="false">
+        <Label fx:id="clientPath" layoutX="10.0" layoutY="85.0" text="Label" />
         <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
+        <Label fx:id="serverPath" layoutX="269.0" layoutY="85.0" text="Label" />
         <ListView fx:id="serverView" layoutX="269.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
         <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
         <Label fx:id="serverLabel" layoutX="269.0" layoutY="590.0" text="Label" />
-        <Button layoutX="269.0" layoutY="69.0" mnemonicParsing="false" onAction="#download" text="Скачать" />
-        <Button layoutX="10.0" layoutY="69.0" mnemonicParsing="false" onAction="#upload" text="Загрузить" />
-    </children>
+        <HBox prefHeight="25.0" prefWidth="519.0">
+            <Button fx:id="clientUp" mnemonicParsing="false" onAction="#toParentClientDir" text="UP" HBox.hgrow="ALWAYS" />
+            <Button fx:id="download" mnemonicParsing="false" onAction="#download" text="Скачать" HBox.hgrow="ALWAYS" />
+            <Button fx:id="serverUp" layoutX="269.0" mnemonicParsing="false" onAction="#toParentServerDir" text="UP" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+                <Insets left="180" />
+            </HBox.margin>
+            </Button>
+            <Button fx:id="upload" mnemonicParsing="false" onAction="#upload" text="Загрузить" HBox.hgrow="ALWAYS" />
+        </HBox>
+    </AnchorPane>
+    <SwingNode layoutX="97.0" layoutY="417.0" />
 </AnchorPane>
