@@ -30,10 +30,11 @@ public class ClientController {
     public AnchorPane mainBox;
     public Button download;
     public Button upload;
-    public Label clientPath;
-    public Label serverPath;
+    public TextField clientPath;
+    public TextField serverPath;
     public Button clientUp;
     public Button serverUp;
+    public TextField inputText;
     private Path clientDir;
     private Path serverDir;
     @FXML
@@ -88,9 +89,26 @@ public class ClientController {
         return label;
     }
 
+    private String getServerFilesDetails() {
+        File[] files = serverDir.toFile().listFiles();
+        long size = 0;
+        String label;
+        if (files != null) {
+            label = files.length + " files in current dir. ";
+            for (File file : files) {
+                size += file.length();
+            }
+            label += "Summary size: " + size / 1024 + " Kb.";
+        } else {
+            label = "Current dir is empty";
+        }
+        return label;
+    }
+
     private void clientInitClickListener() {
         clientView.setOnMouseClicked(e -> {
             String fileName = clientView.getSelectionModel().getSelectedItem();
+            serverView.getSelectionModel().clearSelection();
             if (e.getClickCount() == 2) {
                 System.out.println("Выбран файл: " + fileName);
                 Path path = clientDir.resolve(fileName);
@@ -106,6 +124,7 @@ public class ClientController {
     private void serverInitClickListener() {
         serverView.setOnMouseClicked(e -> {
             String fileName = serverView.getSelectionModel().getSelectedItem();
+            clientView.getSelectionModel().clearSelection();
             if (e.getClickCount() == 2) {
                 System.out.println("Выбран файл: " + fileName);
                 Path path = serverDir.resolve(fileName);
@@ -124,6 +143,7 @@ public class ClientController {
             serverInitClickListener();
             try {
                 while (true) {
+
                     AbstractMessage message = Network.readObject();
                     log.info(String.valueOf(message.getType()));
                     switch (message.getType()) {
@@ -148,10 +168,9 @@ public class ClientController {
                 }
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
 
-            }
-            finally {
+            } finally {
                 Network.stop();
             }
         });
@@ -164,6 +183,7 @@ public class ClientController {
             serverView.getItems().clear();
             serverView.getItems().addAll(names);
             serverPath.setText(String.valueOf(serverDir));
+            serverLabel.setText(getServerFilesDetails());
         });
     }
 
@@ -183,6 +203,56 @@ public class ClientController {
         FileMessage fileMessage = new FileMessage(clientDir.resolve(fileName));
         Network.sendMsg(fileMessage);
         sendPath(serverDir);
+    }
+
+    public void delete(ActionEvent actionEvent) throws IOException {
+        String fileName;
+        if (clientView.getSelectionModel().getSelectedItem() != null) {
+            fileName = (clientView.getSelectionModel().getSelectedItem());
+            Files.delete(clientDir.resolve(fileName));
+            log.info("Файл " + fileName + " удален");
+            fillCurrentDirFiles();
+        } else if (serverView.getSelectionModel().getSelectedItem() != null) {
+            fileName = (serverView.getSelectionModel().getSelectedItem());
+            Network.sendMsg(new DeleteRequest(fileName));
+        }
+    }
+
+    public void mkDir(ActionEvent actionEvent) throws IOException {
+        String dirName = inputText.getText();
+        if (clientView.getSelectionModel().getSelectedItem() != null) {
+            if (!Files.exists(clientDir.resolve(dirName))) {
+                Files.createDirectory(clientDir.resolve(dirName));
+                log.info("Директория " + dirName + " создана");
+                fillCurrentDirFiles();
+            } else log.info("Директория уже существует!");
+        } else if (serverView.getSelectionModel().getSelectedItem() != null) {
+            Network.sendMsg(new MkDirRequest(dirName));
+        }
+    }
+
+    public void rename(ActionEvent actionEvent) throws IOException {
+        String fileName;
+        String targetFileName = inputText.getText();
+        if (clientView.getSelectionModel().getSelectedItem() != null) {
+            fileName = (clientView.getSelectionModel().getSelectedItem());
+            if (!Files.exists(clientDir.resolve(targetFileName))) {
+                Files.move(clientDir.resolve(fileName), clientDir.resolve(targetFileName));
+                fillCurrentDirFiles();
+            } else log.info("Файл с таким именем уже существует!");
+        } else if (serverView.getSelectionModel().getSelectedItem() != null) {
+            fileName = (serverView.getSelectionModel().getSelectedItem());
+            Network.sendMsg(new RenameRequest(fileName, targetFileName));
+        }
+    }
+
+    public void clearListviewSelected() {
+        clientView.setOnMouseClicked(e -> {
+            serverView.getSelectionModel().clearSelection();
+        });
+        serverView.setOnMouseClicked(e -> {
+            clientView.getSelectionModel().clearSelection();
+        });
     }
 
     public void tryToAuth() throws RuntimeException {
@@ -209,3 +279,4 @@ public class ClientController {
         } else serverDir = root;
     }
 }
+
