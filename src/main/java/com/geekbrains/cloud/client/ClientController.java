@@ -12,10 +12,14 @@ import javafx.scene.layout.HBox;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 @Slf4j
@@ -143,7 +147,6 @@ public class ClientController {
             serverInitClickListener();
             try {
                 while (true) {
-
                     AbstractMessage message = Network.readObject();
                     log.info(String.valueOf(message.getType()));
                     switch (message.getType()) {
@@ -156,17 +159,30 @@ public class ClientController {
                             break;
                         case FILE_MESSAGE:
                             FileMessage fileMessage = (FileMessage) message;
-                            Files.write(clientDir.resolve(fileMessage.getFileName()), fileMessage.getBytes());
+                            Path cur = clientDir.resolve(fileMessage.getFileName());
+                            if (!Files.exists(cur)){
+                                Files.createFile(cur);
+                            }
+                            Files. write(
+                                    clientDir.resolve(fileMessage.getFileName()),
+                                    fileMessage.getBytes(),
+                                    StandardOpenOption.APPEND //Склейка сообщения
+                            );
                             fillCurrentDirFiles();
                             break;
                         case LIST:
                             FilesList list = (FilesList) message;
                             serverDir = Paths.get(list.getCurrentDir());
                             updateServerView(list.getList());
+                            break;
                     }
 
                 }
-            } catch (ClassNotFoundException | IOException e) {
+
+            } catch (SocketException e){
+                connect();
+            }
+            catch (ClassNotFoundException | IOException e){
                 e.printStackTrace();
             } catch (NullPointerException e) {
 
@@ -199,9 +215,23 @@ public class ClientController {
     }
 
     public void upload(ActionEvent actionEvent) throws IOException {
+
+
+        //Разбиваем сообщение на части
+        byte[] buffer = new byte[32 * 1024];
         String fileName = clientView.getSelectionModel().getSelectedItem();
-        FileMessage fileMessage = new FileMessage(clientDir.resolve(fileName));
-        Network.sendMsg(fileMessage);
+        try (InputStream is = new FileInputStream(clientDir.resolve(fileName).toFile())) {
+            while (is.available() > 0) {
+                int cnt = is.read(buffer);
+                if (cnt < 8192) {
+                    byte[] tmp = new byte[cnt];
+                    if (cnt >= 0) System.arraycopy(buffer, 0, tmp, 0, cnt);
+                    Network.sendMsg(new FileMessage(fileName, tmp.clone()));
+                } else {
+                    Network.sendMsg(new FileMessage(fileName, buffer.clone()));
+                }
+            }
+        }
         sendPath(serverDir);
     }
 
@@ -244,15 +274,6 @@ public class ClientController {
             fileName = (serverView.getSelectionModel().getSelectedItem());
             Network.sendMsg(new RenameRequest(fileName, targetFileName));
         }
-    }
-
-    public void clearListviewSelected() {
-        clientView.setOnMouseClicked(e -> {
-            serverView.getSelectionModel().clearSelection();
-        });
-        serverView.setOnMouseClicked(e -> {
-            clientView.getSelectionModel().clearSelection();
-        });
     }
 
     public void tryToAuth() throws RuntimeException {

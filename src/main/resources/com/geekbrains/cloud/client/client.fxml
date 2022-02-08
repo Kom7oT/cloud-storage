@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
     <HBox fx:id="authorization" alignment="CENTER" focusTraversable="true" layoutY="301.0" prefHeight="25.0" prefWidth="722.0" VBox.vgrow="ALWAYS">
         <TextField fx:id="loginField" alignment="CENTER" focusTraversable="false" promptText="Логин" HBox.hgrow="ALWAYS">
             <HBox.margin>
@@ -43,8 +43,8 @@
               <TextField fx:id="serverPath" editable="false" focusTraversable="false" prefWidth="313.0" text="Label" HBox.hgrow="NEVER" />
          </children>
       </HBox>
-        <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0" onTouchPressed="#clearListviewSelected" prefHeight="489.0" prefWidth="350.0" />
-        <ListView fx:id="serverView" layoutX="371.0" layoutY="101.0" onTouchPressed="#clearListviewSelected" prefHeight="489.0" prefWidth="350.0" />
+        <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0"  prefHeight="489.0" prefWidth="350.0" />
+        <ListView fx:id="serverView" layoutX="371.0" layoutY="101.0"  prefHeight="489.0" prefWidth="350.0" />
         <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
         <Label fx:id="serverLabel" layoutX="371.0" layoutY="590.0" text="Label" />
       <AnchorPane layoutX="-3.0" layoutY="608.0" prefHeight="106.0" prefWidth="742.0">

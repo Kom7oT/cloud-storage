@@ -5,10 +5,13 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 @Slf4j
 
@@ -16,7 +19,6 @@ public class FilesHandler extends SimpleChannelInboundHandler<AbstractMessage> {
 
     private final Path root = Paths.get("serverDir");
     private Path currentDir;
-
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -49,11 +51,32 @@ public class FilesHandler extends SimpleChannelInboundHandler<AbstractMessage> {
                     break;
                 case FILE_REQUEST:
                     FileRequest fileRequest = (FileRequest) message;
-                    ctx.writeAndFlush(new FileMessage(currentDir.resolve(fileRequest.getFileName())));
+                    String fileName = fileRequest.getFileName();
+                    //Разбиваем сообщение на части
+                    byte[] buffer = new byte[32 * 1024];
+                    try (InputStream is = new FileInputStream(currentDir.resolve(fileName).toFile())) {
+                        while (is.available() > 0) {
+                            int cnt = is.read(buffer);
+                            if (cnt < 32 * 1024) {
+                                byte[] tmp = new byte[cnt];
+                                if (cnt >= 0) System.arraycopy(buffer, 0, tmp, 0, cnt);
+                                ctx.writeAndFlush(new FileMessage(fileName, tmp.clone()));
+                            } else {
+                                ctx.writeAndFlush(new FileMessage(fileName, buffer.clone()));
+                            }
+                        }
+                    }
                     break;
                 case FILE_MESSAGE:
                     FileMessage fileMessage = (FileMessage) message;
-                    Files.write(currentDir.resolve(fileMessage.getFileName()), fileMessage.getBytes());
+                    Path cur = currentDir.resolve(fileMessage.getFileName());
+                    if (!Files.exists(cur)) {
+                        Files.createFile(cur);
+                    }
+                    Files.write(currentDir.resolve(fileMessage.getFileName()),
+                            fileMessage.getBytes(),
+                            StandardOpenOption.APPEND
+                    );
                     sendList(ctx);
                     break;
                 case REFRESH_REQUEST:
@@ -79,7 +102,7 @@ public class FilesHandler extends SimpleChannelInboundHandler<AbstractMessage> {
                     break;
                 case RENAME_REQUEST:
                     RenameRequest renameRequest = (RenameRequest) message;
-                    if (!Files.exists(currentDir.resolve(renameRequest.getTargetFileName()))){
+                    if (!Files.exists(currentDir.resolve(renameRequest.getTargetFileName()))) {
                         Files.move(currentDir.resolve(renameRequest.getFileName()), currentDir.resolve(renameRequest.getTargetFileName()));
                     } else log.info("File already exists!");
                     sendList(ctx);
