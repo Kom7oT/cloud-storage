@@ -14,6 +14,11 @@ public class FileMessage extends AbstractMessage {
     private String fileName;
     private byte[] bytes;
 
+    public FileMessage(String fileName, byte[] bytes) {
+        this.fileName = fileName;
+        this.bytes = bytes;
+    }
+
     public FileMessage(Path path) throws IOException {
         fileName = path.getFileName().toString();
         bytes = Files.readAllBytes(path);

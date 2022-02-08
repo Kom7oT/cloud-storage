@@ -5,8 +5,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
-    <HBox fx:id="authorization" alignment="CENTER" focusTraversable="true" layoutY="301.0" prefHeight="25.0" prefWidth="519.0" VBox.vgrow="ALWAYS">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.client.ClientController">
+    <HBox fx:id="authorization" alignment="CENTER" focusTraversable="true" layoutY="301.0" prefHeight="25.0" prefWidth="722.0" VBox.vgrow="ALWAYS">
         <TextField fx:id="loginField" alignment="CENTER" focusTraversable="false" promptText="Логин" HBox.hgrow="ALWAYS">
             <HBox.margin>
                 <Insets left="5.0" right="5.0" />
@@ -24,23 +24,39 @@
         </Button>
     </HBox>
 
-    <AnchorPane fx:id="mainBox" visible="false">
-        <Label fx:id="clientPath" layoutX="10.0" layoutY="85.0" text="Label" />
-        <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
-        <Label fx:id="serverPath" layoutX="269.0" layoutY="85.0" text="Label" />
-        <ListView fx:id="serverView" layoutX="269.0" layoutY="101.0" prefHeight="489.0" prefWidth="250.0" />
-        <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
-        <Label fx:id="serverLabel" layoutX="269.0" layoutY="590.0" text="Label" />
-        <HBox prefHeight="25.0" prefWidth="519.0">
-            <Button fx:id="clientUp" mnemonicParsing="false" onAction="#toParentClientDir" text="UP" HBox.hgrow="ALWAYS" />
-            <Button fx:id="download" mnemonicParsing="false" onAction="#download" text="Скачать" HBox.hgrow="ALWAYS" />
-            <Button fx:id="serverUp" layoutX="269.0" mnemonicParsing="false" onAction="#toParentServerDir" text="UP" HBox.hgrow="ALWAYS">
-            <HBox.margin>
-                <Insets left="180" />
-            </HBox.margin>
+    <AnchorPane fx:id="mainBox" prefHeight="665.0" prefWidth="739.0" visible="false">
+      <HBox fillHeight="false" layoutX="10.0" layoutY="69.0" prefHeight="25.0" prefWidth="710.0">
+         <children>
+               <Button fx:id="clientUp" accessibleRole="BUTTON" mnemonicParsing="false" onAction="#toParentClientDir" prefWidth="40.0" text="UP" HBox.hgrow="NEVER">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
             </Button>
-            <Button fx:id="upload" mnemonicParsing="false" onAction="#upload" text="Загрузить" HBox.hgrow="ALWAYS" />
-        </HBox>
+              <TextField fx:id="clientPath" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="25.0" prefWidth="317.0" text="Label" HBox.hgrow="NEVER">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin></TextField>
+               <Button fx:id="serverUp" mnemonicParsing="false" onAction="#toParentServerDir" prefHeight="25.0" prefWidth="43.0" text="UP" HBox.hgrow="NEVER">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin></Button>
+              <TextField fx:id="serverPath" editable="false" focusTraversable="false" prefWidth="313.0" text="Label" HBox.hgrow="NEVER" />
+         </children>
+      </HBox>
+        <ListView fx:id="clientView" layoutX="10.0" layoutY="101.0"  prefHeight="489.0" prefWidth="350.0" />
+        <ListView fx:id="serverView" layoutX="371.0" layoutY="101.0"  prefHeight="489.0" prefWidth="350.0" />
+        <Label fx:id="clientLabel" layoutX="10.0" layoutY="590.0" text="Label" />
+        <Label fx:id="serverLabel" layoutX="371.0" layoutY="590.0" text="Label" />
+      <AnchorPane layoutX="-3.0" layoutY="608.0" prefHeight="106.0" prefWidth="742.0">
+         <children>
+            <Button layoutX="371.0" layoutY="49.0" mnemonicParsing="false" onAction="#delete" text="Удалить" />
+            <Button layoutX="547.0" layoutY="49.0" mnemonicParsing="false" onAction="#mkDir" prefHeight="25.0" prefWidth="97.0" text="Создать папку" />
+            <TextField fx:id="inputText" layoutX="371.0" layoutY="19.0" prefHeight="25.0" prefWidth="273.0" />
+            <Button layoutX="438.0" layoutY="49.0" mnemonicParsing="false" onAction="#rename" text="Переименовать" />
+         </children>
+      </AnchorPane>
+      <Button layoutX="12.0" layoutY="36.0" mnemonicParsing="false" onAction="#upload" text="upload" />
+      <Button layoutX="373.0" layoutY="36.0" mnemonicParsing="false" onAction="#download" text="download" />
     </AnchorPane>
     <SwingNode layoutX="97.0" layoutY="417.0" />
 </AnchorPane>

@@ -5,5 +5,8 @@ public enum CommandType {
     FILE_MESSAGE,
     FILE_REQUEST,
     LIST,
-    REFRESH_REQUEST
+    REFRESH_REQUEST,
+    DELETE_REQUEST,
+    MKDIR_REQUEST,
+    RENAME_REQUEST
 }

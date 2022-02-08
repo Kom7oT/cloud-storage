@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения">
+    <list default="true" id="5d6ad025-6fcf-43f9-b2a8-67622389d837" name="Default Changelist" comment="Добавлена возможность удаления файлов&#10;Добавлена возможность переименования файлов&#10;Добавлена возможность создания директорий">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/client/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/FileMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/model/FileMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/AuthHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekbrains/cloud/netty/FilesHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/geekbrains/cloud/client/client.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +38,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="KEEP" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="c1f9be0a-e2fc-4d72-a049-9335b6902f00" />
+        <option name="url" value="https://github.com/Kom7oT/cloud-storage.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectId" id="22hGe2pK3qn1VgrjdLHLPH17sTo" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -50,7 +67,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../chathome_03082021" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyVBox" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -71,7 +88,7 @@
       <recent name="D:\java\cloud-storage\serverDir\asd" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ClientApp">
+  <component name="RunManager" selected="Application.CloudServer">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -119,8 +136,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientApp" />
         <item itemvalue="Application.CloudServer" />
+        <item itemvalue="Application.ClientApp" />
       </list>
     </recent_temporary>
   </component>
@@ -201,7 +218,21 @@
       <option name="project" value="LOCAL" />
       <updated>1643834413596</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Исправлен переход в родительскую директорию на сервере&#10;&#10;Обработаны NPE в случае недоступности сервера">
+      <created>1643925859824</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1643925859824</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Добавлена возможность удаления файлов&#10;Добавлена возможность переименования файлов&#10;Добавлена возможность создания директорий">
+      <created>1644147732702</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1644147732702</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +282,9 @@
     <MESSAGE value="Добавлена возможность работы с файлами и директориями через telnet" />
     <MESSAGE value="1)Переписан класс Сети под использование ObjectEncoderOutputStream и ObjectEncoderInputStream&#10;&#10;2) Добавлена авторизация &#10;&#10;3) Обработан NullPointException при открытии пустой папки" />
     <MESSAGE value="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлено поле с текущим расположением&#10;Добавлена кнопка &quot;наверх&quot; в серверной части&#10;Обработаны NPE, вызывавшие падение приложения" />
+    <MESSAGE value="Исправлен переход в родительскую директорию на сервере&#10;&#10;Обработаны NPE в случае недоступности сервера" />
+    <MESSAGE value="Добавлена возможность удаления файлов&#10;Добавлена возможность переименования файлов&#10;Добавлена возможность создания директорий" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена возможность удаления файлов&#10;Добавлена возможность переименования файлов&#10;Добавлена возможность создания директорий" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />
